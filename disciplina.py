@@ -2,9 +2,9 @@
 Implementação da classe Disciplina. A classe disciplina é a classe que quada os dados das displinas ministradas
 pelos professores e cursada pelos alunos. no projeto MiniSIGAA
 """
-from Funcoes.manip_arq import Carregar_arquivo
+from manip_arq import Carregar_arquivo
 
-pathDisciplinas = 'Dados_salvos/Disciplinas'
+pathDisciplinas = 'dados/disciplinas/'
 
 class Disciplina:
     def __init__(self, ID='', Nome='',  Professor = '', Alunos = ''):
@@ -13,7 +13,7 @@ class Disciplina:
         self.__Professor = Professor
         self.__Alunos = Alunos
 
-    #metodos para receber os atribudos do objeto 
+    #metodos para receber os atribudos do objeto
     def Set_alunos(self, Alunos):
         self.__Alunos = Alunos
 
@@ -41,7 +41,7 @@ class Disciplina:
 
     # Metodos de manipulação de arquivos
     def Salvar_dados(self):
-        arq = open('Dados/Disciplinas/'+str(self.__ID)+'.txt', 'w+')
+        arq = open(pathDisciplinas+str(self.__ID)+'.txt', 'w+')
 
         DadosParaSalvar = [self.__ID, self.__Nome, self.__Professor[0], self.__Professor[1]]
 
@@ -100,4 +100,3 @@ poo.Salvar_dados()
 
 #poo.Carregar_dados('DCO5362')
 #poo.PrintObjeto()
-    

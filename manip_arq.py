@@ -40,7 +40,3 @@ def Carregar_arquivo(path, nome, modo):
     """
     with open(path+ '/' + nome +'.txt', modo) as arq:
             return arq.read()
-
-#Excluir_arquivo('Dados_salvos/Disciplinas','DCO5362')
-#dado = Carregar_arquivo('Dados_salvos', str(202232648), 'r+')
-#print(dado)

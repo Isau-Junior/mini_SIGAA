@@ -1,2 +1,0 @@
-DCO1030	Variaveis aleatorias
-DCO1062	Programacao orientada a objetos

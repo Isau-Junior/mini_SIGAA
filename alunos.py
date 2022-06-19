@@ -1,16 +1,14 @@
-#Testando Classe: Aluno
 
-from classpessoa import Pessoa
-from Funcoes.manip_arq import Buscar_arquivo
+from pessoa import Pessoa
+from manip_arq import Buscar_arquivo
 
-pathDisciplina_sistema = 'Dados\Sistema\Disciplina_sistema.txt'
-pathHistorico = 'Dados/Alunos/Historico_'
+pathDisciplina_sistema = 'dados/disciplinas.txt'
+pathHistorico = 'dados/alunos/historico_'
 
 class Aluno(Pessoa):
-    def __init__(self, Nome='', Senha='', Matricula='', dic_historico={}):
-        super().__init__(Nome, Senha, Matricula)
+    def __init__(self, ID='', Nome='', Senha='', dic_historico={}):
+        super().__init__(ID, Nome, Senha)
         self.__dic_historico = dic_historico
-        #self.__dic_materias = dic_materias
 
     #Metodo para aluno poder escolher disciplina para se cadastrar
     def set_materias(self, ID_materia):
@@ -41,8 +39,8 @@ class Aluno(Pessoa):
 
     #Metodo para ler  e immprimir historico_ID.txt de cada aluno com as notas das respectivas disciplinas
     def get_historico(self):
-        if Buscar_arquivo('Dados/Alunos', f'historico_{self.get_matricula()}'):
-            with open('Dados/Alunos/historico_' + str(self.get_matricula()) + '.txt', 'r+') as file:
+        if Buscar_arquivo(pathHistorico+f'{self.get_matricula()}'):
+            with open(pathHistorico + f'{self.get_matricula()}' + '.txt', 'r+') as file:
                 file_conteudo = file.read()
                 listaDisciplinas = file_conteudo.split('\n')
                 listaDisciplinas.pop()
@@ -54,7 +52,7 @@ class Aluno(Pessoa):
             # para cada disciplina do historico, verifica se exite nota do aluno cadastrada na respectiva disciplina
             notas = {}  
             for chave in self.__dic_historico.keys():
-                with open(f'Dados/Disciplinas/{chave}.txt', 'r+') as file:
+                with open(f'dados/disciplinas/{chave}.txt', 'r+') as file:
                     dados = file.read()
                     listaDadosDisciplina = dados.split('\n')
 
@@ -77,7 +75,7 @@ class Aluno(Pessoa):
     
     #Metodo para guardar informações do aluno:
     def salvar_dados(self):
-        with open('Dados/Alunos/' + str(self.get_matricula()) + '.txt', 'w+') as file:
+        with open('dados/alunos/' + str(self.get_matricula()) + '.txt', 'w+') as file:
             listadados = [self.get_matricula(), self.get_nome(), self.get_senha(), self.get_DataUltimoAcesso()]
             print(listadados)
 
@@ -85,8 +83,8 @@ class Aluno(Pessoa):
                 file.write(str(dado))
                 file.write('\t')
 
-    def carregar_dados(self, matricula):
-        arq = open('Dados/Alunos/'+str(matricula)+'.txt', 'r')
+    def carregar_dados(self, ID):
+        arq = open('dados/alunos/'+str(ID)+'.txt', 'r')
         dados = arq.read()
         dados.replace('\n', ' ')
         dadosaluno = dados.split('\t')
@@ -106,14 +104,15 @@ class Aluno(Pessoa):
         print('-----------------------------------------------------------------')
 
     
-Tadeu = Aluno()
+#Tadeu = Aluno()#
 #Tadeu.Set_nome('Tadeu')
 #Tadeu.Set_matricula('20211234')
 #Tadeu.Set_senha('123456')
 
 #Tadeu.salvar_dados()
-Tadeu.carregar_dados(20211234)
-print(Tadeu.get_nome())
+#Tadeu.salvar_dados()
+#Tadeu.carregar_dados(20211234)
+#print(Tadeu.get_nome())
 #Tadeu.get_declaracao()
 #Tadeu.set_materias('DCO1031')
-Tadeu.get_historico()
+#Tadeu.get_historico()

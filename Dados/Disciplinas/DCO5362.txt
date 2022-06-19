@@ -1,4 +1,1 @@
-DCO5362	Programacao orientada a objetos	2022349586	Yuri	
-20210073124	Isau	8
-20211239847	Wagner	8
-20211234	Tateu	8
+DCO5362	POO	ricardo		
