@@ -62,11 +62,10 @@ class Sistema:
     def gravarSistema(self):
         # salva infor sistema
         info = [str(self.qnt_usuarios), str(self.qnt_disciplinas), self.ID_admin, self.senha_admin]
-        file = open('dados/sistema.txt', 'w+')
-        for i in info:
-            file.write(str(i))
-            file.write('\n')
-        file.close()
+        with open('dados/sistema.txt', 'w+') as file:
+            for i in info:
+                file.write(str(i))
+                file.write('\n')
 
     # testado
     def gravarDisciplinas(self):
@@ -74,69 +73,71 @@ class Sistema:
         with open("dados/disciplinas.txt", 'w+') as file:
             for key, value in self.disciplinas.items():
                 file.write('%s:%s\n' % (key, value))
-        file.close()
 
     # testado
     def gravarTudo(self): #grava tudo, informações sistema e discionario disciplinas
         #salva infor sistema
         info1 = [str(self.qnt_usuarios), str(self.qnt_disciplinas), self.ID_admin, self.senha_admin]
-        file1 = open('dados/sistema.txt', 'w+')
-        for i in info1:
-            file1.write(str(i))
-            file1.write('\n')
-        file1.close()
+        with open('dados/sistema.txt', 'w+') as file1:
+            for i in info1:
+                file1.write(str(i))
+                file1.write('\n')
+
         #salva info disciplinas
         with open("dados/disciplinas.txt", 'w+') as file2:
             for key, value in self.disciplinas.items():
                 file2.write('%s:%s\n' % (key, value))
-        file2.close()
 
     # testado
     def carregarSistema(self):
-        file = open('dados/sistema.txt', 'r')
-        info = file.readlines()
-        aux = []
-        for i in range(len(info)):
-           aux.append(str(info[i].strip('\n')))
-        self.qnt_usuarios = int(aux[0])
-        self.qnt_disciplinas = int(aux[1])
-        self.ID_admin = aux[2]
-        self.ID_admin = aux[3]
-        file.close()
+        with open('dados/sistema.txt', 'r') as file:
+            info = file.readlines()
 
-    # testado
-    def carregarDisciplinas(self):
-        file = open('dados/disciplinas.txt', 'r')
-        info = file.readlines()
-        aux = []
-        for i in range(len(info)):
-            aux.append(str(info[i].strip('\n')))
-        for i in range(len(aux)):
-            aux2 = aux[i].split(':')
-            self.disciplinas[aux2[0]] = aux2[1]
-        file.close()
-
-    # testado
-    def carregarTudo(self):
-            file1 = open('dados/sistema.txt', 'r')
-            info = file1.readlines()
             aux = []
             for i in range(len(info)):
                 aux.append(str(info[i].strip('\n')))
+
             self.qnt_usuarios = int(aux[0])
             self.qnt_disciplinas = int(aux[1])
             self.ID_admin = aux[2]
             self.ID_admin = aux[3]
-            file1.close()
-            file2 = open('dados/disciplinas.txt', 'r')
-            info = file2.readlines()
+
+    # testado
+    def carregarDisciplinas(self):
+        with open('dados/disciplinas.txt', 'r') as file:
+            info = file.readlines()
+
             aux = []
             for i in range(len(info)):
                 aux.append(str(info[i].strip('\n')))
+
             for i in range(len(aux)):
                 aux2 = aux[i].split(':')
                 self.disciplinas[aux2[0]] = aux2[1]
-            file2.close()
+
+    # testado
+    def carregarTudo(self):
+            with open('dados/sistema.txt', 'r') as file1:
+                info = file1.readlines()
+                aux = []
+                for i in range(len(info)):
+                    aux.append(str(info[i].strip('\n')))
+
+                self.qnt_usuarios = int(aux[0])
+                self.qnt_disciplinas = int(aux[1])
+                self.ID_admin = aux[2]
+                self.ID_admin = aux[3]
+
+            with open('dados/disciplinas.txt', 'r') as file2:
+                info = file2.readlines()
+
+                aux = []
+                for i in range(len(info)):
+                    aux.append(str(info[i].strip('\n')))
+
+                for i in range(len(aux)):
+                    aux2 = aux[i].split(':')
+                    self.disciplinas[aux2[0]] = aux2[1]
 
 
 
