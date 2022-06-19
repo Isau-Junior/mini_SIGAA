@@ -41,7 +41,7 @@ class Disciplina:
 
     # Metodos de manipulação de arquivos
     def Salvar_dados(self):
-        arq = open('Dados_salvos/Disciplinas/'+str(self.__ID)+'.txt', 'w+')
+        arq = open('Dados/Disciplinas/'+str(self.__ID)+'.txt', 'w+')
 
         DadosParaSalvar = [self.__ID, self.__Nome, self.__Professor[0], self.__Professor[1]]
 
@@ -86,17 +86,17 @@ class Disciplina:
         print(self.__Professor)
         print(self.__Alunos)
 
-#dicAlunos = {(20210073124, 'Isau'): 8, (20211239847, 'Wagner'): 8, (20213218974, 'Tateu'): 8}
-#Prof = (2022349586, 'Yuri')
+dicAlunos = {(20210073124, 'Isau'): 8, (20211239847, 'Wagner'): 8}
+Prof = (2022349586, 'Yuri')
 
-#poo = Disciplina()
-#poo.Set_id('DCO5362')
-#poo.Set_nome('Programacao orientada a objetos')
-#poo.Set_alunos(dicAlunos)
-#poo.Set_professor(Prof)
+poo = Disciplina()
+poo.Set_id('DCO1030')
+poo.Set_nome('Variavel aleatoria')
+poo.Set_alunos(dicAlunos)
+poo.Set_professor(Prof)
 #poo.PrintObjeto()
 
-#poo.Salvar_dados()
+poo.Salvar_dados()
 
 #poo.Carregar_dados('DCO5362')
 #poo.PrintObjeto()

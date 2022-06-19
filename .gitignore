@@ -13,4 +13,5 @@ env.bak/
 venv.bak/
 
 # files of data
-Dados_salvos/
+Dados/
+
