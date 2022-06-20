@@ -41,22 +41,21 @@ class Disciplina:
 
     # Metodos de manipulação de arquivos
     def Salvar_dados(self):
-        arq = open(pathDisciplinas+str(self.__ID)+'.txt', 'w+')
+        with open(pathDisciplinas+str(self.__ID)+'.txt', 'w+') as arq:
 
-        DadosParaSalvar = [self.__ID, self.__Nome, self.__Professor[0], self.__Professor[1]]
+            DadosParaSalvar = [self.__ID, self.__Nome, self.__Professor[0], self.__Professor[1]]
 
-        for dado in DadosParaSalvar:
-            arq.write(str(dado))
-            arq.write('\t')
+            for dado in DadosParaSalvar:
+                arq.write(str(dado))
+                arq.write('\t')
 
-        for chave, nota in self.__Alunos.items():
-            arq.write('\n')
-            arq.write(str(chave[0]))
-            arq.write('\t')
-            arq.write(chave[1])
-            arq.write('\t')
-            arq.write(str(nota))
-        arq.close()
+            for chave, nota in self.__Alunos.items():
+                arq.write('\n')
+                arq.write(str(chave[0]))
+                arq.write('\t')
+                arq.write(chave[1])
+                arq.write('\t')
+                arq.write(str(nota))
 
     def Carregar_dados(self, ID):
         dados = Carregar_arquivo(pathDisciplinas, ID, 'r+')

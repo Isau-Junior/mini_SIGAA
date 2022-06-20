@@ -24,12 +24,9 @@ class Pessoa:
         self.__DataUltimoAcesso = DataUltimoAcesso
 
 
-    def gerar_DataUltimoAcesso(self, DataUltimoAcesso=''):
-        if DataUltimoAcesso == '':
-            data = datetime.datetime.now()
-            self.__DataUltimoAcesso = data.strftime("%d/%m/%y %H:%M:%S")
-        else:
-            self.__DataUltimoAcesso = DataUltimoAcesso
+    def gerar_DataUltimoAcesso(self):
+        data = datetime.datetime.now()
+        self.__DataUltimoAcesso = data.strftime("%d/%m/%y %H:%M:%S")
 
     def get_ID(self):
         return self.__ID

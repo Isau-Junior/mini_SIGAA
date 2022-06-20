@@ -44,23 +44,21 @@ class Administrador(Pessoa):
 
     def guardar_dado(self):
         info = [str(self.get_ID()), str(self.get_nome()), self.get_senha(), self.get_data()]
-        file = open('dados/admin.txt', 'w+')
-        for i in info:
-            file.write(str(i))
-            file.write('\n')
-        file.close()
+        with open('dados/admin.txt', 'w+') as file:
+            for i in info:
+                file.write(str(i))
+                file.write('\n')
 
     def carregar_dados(self):
-        file1 = open('dados/admin.txt', 'r')
-        info = file1.readlines()
-        aux = []
-        for i in range(len(info)):
-            aux.append(str(info[i].strip('\n')))
-        self.Set_nome(aux[0])
-        self.Set_ID(aux[1])
-        self.Set_senha(aux[2])
-        self.Set_DataUltimoAcesso(aux[3])
-        file1.close()
+        with open('dados/admin.txt', 'r') as file:
+            info = file.readlines()
+            aux = []
+            for i in range(len(info)):
+                aux.append(str(info[i].strip('\n')))
+            self.Set_nome(aux[0])
+            self.Set_ID(aux[1])
+            self.Set_senha(aux[2])
+            self.Set_DataUltimoAcesso(aux[3])
 
 class Professor(Pessoa):
 
@@ -99,23 +97,21 @@ class Professor(Pessoa):
     def salvar_dados(self):
         self.gerar_DataUltimoAcesso()
         info = [str(self.get_ID()), str(self.get_nome()), self.get_senha(), self.get_data()]
-        file = open(f'dados/professores/{self.get_ID()}.txt', 'w+')
-        for i in info:
-            file.write(str(i))
-            file.write('\n')
-        file.close()
+        with open(f'dados/professores/{self.get_ID()}.txt', 'w+') as file:
+            for i in info:
+                file.write(str(i))
+                file.write('\n')
 
     def carregar_dados(self):
-        file1 = open(f'dados/professores/{self.get_ID()}.txt', 'r+')
-        info = file1.readlines()
-        aux = []
-        for i in range(len(info)):
-            aux.append(str(info[i].strip('\n')))
-        self.Set_nome(aux[0])
-        self.Set_ID(aux[1])
-        self.Set_senha(aux[2])
-        self.Set_DataUltimoAcesso(aux[3])
-        file1.close()
+        with open(f'dados/professores/{self.get_ID()}.txt', 'r+') as file:
+            info = file.readlines()
+            aux = []
+            for i in range(len(info)):
+                aux.append(str(info[i].strip('\n')))
+            self.Set_nome(aux[0])
+            self.Set_ID(aux[1])
+            self.Set_senha(aux[2])
+            self.Set_DataUltimoAcesso(aux[3])
 
 """
 wagner = Professor('1234', 'Yuri', '123')
