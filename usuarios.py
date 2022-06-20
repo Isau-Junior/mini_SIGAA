@@ -19,25 +19,26 @@ class Administrador(Pessoa):
 
     def Excluir_disciplina(self, path, ID):
         if Buscar_arquivo(path, ID):
-            os.remove(path + '/' + ID + '.txt')
+            os.remove(path + ID + '.txt')
+            print('Disciplina Excluida com sucesso!!!')
         else:
             print('Arquivo não encontrado')
 
-        with open('Dados_salvos\Sistema\Disciplinas.txt', 'r') as arq:
+        with open('dados/disciplinas.txt', 'r') as arq:
             conteudoarq = arq.read()
             print(conteudoarq)
             lista_disciplinas = conteudoarq.split('\n')
             lista_disciplinas.pop()
             dicDiciplinas = {}
             for disciplina in lista_disciplinas:
-                dadosDisciplina = disciplina.split('\t')
+                dadosDisciplina = disciplina.split(':')
                 dicDiciplinas.update({dadosDisciplina[0]:dadosDisciplina[1]})
             del dicDiciplinas[ID]
 
-        with open('Dados_salvos/Sistema/Disciplinas.txt', 'w+') as arq:
+        with open('dados/disciplinas.txt', 'w+') as arq:
             for disciplina in dicDiciplinas.keys():
                 arq.write(disciplina)
-                arq.write('\t')
+                arq.write(':')
                 arq.write(dicDiciplinas[disciplina])
                 arq.write('\n')
 
@@ -95,7 +96,7 @@ class Professor(Pessoa):
                 print('Não existe essa disciplina')
                 cont = 0
 
-    def guardar_dado(self):
+    def salvar_dados(self):
         self.gerar_DataUltimoAcesso()
         info = [str(self.get_ID()), str(self.get_nome()), self.get_senha(), self.get_data()]
         file = open(f'dados/professores/{self.get_ID()}.txt', 'w+')

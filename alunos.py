@@ -75,8 +75,8 @@ class Aluno(Pessoa):
     
     #Metodo para guardar informações do aluno:
     def salvar_dados(self):
-        with open('dados/alunos/' + str(self.get_matricula()) + '.txt', 'w+') as file:
-            listadados = [self.get_matricula(), self.get_nome(), self.get_senha(), self.get_DataUltimoAcesso()]
+        with open('dados/alunos/' + str(self.get_ID()) + '.txt', 'w+') as file:
+            listadados = [self.get_ID(), self.get_nome(), self.get_senha(), self.get_data()]
             print(listadados)
 
             for dado in listadados:
@@ -103,16 +103,21 @@ class Aluno(Pessoa):
         print('é CURSANDO.')
         print('-----------------------------------------------------------------')
 
-    
-#Tadeu = Aluno()#
-#Tadeu.Set_nome('Tadeu')
-#Tadeu.Set_matricula('20211234')
-#Tadeu.Set_senha('123456')
 
-#Tadeu.salvar_dados()
-#Tadeu.salvar_dados()
-#Tadeu.carregar_dados(20211234)
-#print(Tadeu.get_nome())
-#Tadeu.get_declaracao()
-#Tadeu.set_materias('DCO1031')
-#Tadeu.get_historico()
+if __name__ == '__main__': 
+    Tadeu = Aluno()
+    Tadeu.Set_nome('Tadeu')
+    Tadeu.Set_ID('20211234')
+    Tadeu.Set_senha('123456')
+
+    print(Tadeu.get_nome(), type(Tadeu.get_nome()))
+    print(Tadeu.get_ID(), type(Tadeu.get_ID()))
+    print(Tadeu.get_senha(), type(Tadeu.get_senha()))
+
+    #Tadeu.salvar_dados()
+    #Tadeu.salvar_dados()
+    #Tadeu.carregar_dados(20211234)
+    #print(Tadeu.get_nome())
+    #Tadeu.get_declaracao()
+    #Tadeu.set_materias('DCO1031')
+    #Tadeu.get_historico()

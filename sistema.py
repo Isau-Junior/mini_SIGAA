@@ -57,7 +57,7 @@ class Sistema:
 
     #testado
     def get_disciplina(self, ID):
-        print(self.disciplinas[ID])
+        return self.disciplinas[ID]
 
     def gravarSistema(self):
         # salva infor sistema
@@ -71,7 +71,7 @@ class Sistema:
     # testado
     def gravarDisciplinas(self):
         # salva info disciplinas
-        with open("dados/disciplinas.txt", 'w+') as file:
+        with open("dados/disciplinas.txt", 'a') as file:
             for key, value in self.disciplinas.items():
                 file.write('%s:%s\n' % (key, value))
         file.close()
@@ -139,4 +139,9 @@ class Sistema:
             file2.close()
 
 
-
+if __name__ == '__main__':
+    sis = Sistema()
+    id = sis.gerar_IDdisciplina()
+    print(id, type(id))
+    sis.set_disciplinas('POO', id)
+    print(sis.get_disciplina(id))

@@ -24,7 +24,8 @@ def Excluir_arquivo(path, nome):
     param: nome -> Nome do arquivo (tipo: str)
     """
     if Buscar_arquivo(path, nome):
-        os.remove(path + '/' + nome + '.txt')
+        os.remove(path + nome + '.txt')
+        print('Usuario excluido com sucesso!!!')
     else:
         print('Arquivo não encontrado')
 

@@ -1,112 +1,160 @@
+import os
+from validacoes import validar_inputs
+from menus import *
+from manip_arq import Excluir_arquivo
+
+# Importando as classes
 from sistema import Sistema
-from pessoa import Pessoa
 from alunos import Aluno
 from usuarios import Administrador, Professor
 from disciplina import Disciplina
 
 
+pathAlunos = 'dados/alunos/'
+pathDisciplinas = 'dados/disciplinas/'
+pathProfessores = 'dados/professores/'
+
+clear = lambda: os.system('cls')
 sistema = Sistema()
 sistema.carregarTudo()
 ficar = True #boleano para controlar o laço principal
 while(ficar): #laço principal
-  print("1 - Usuario Administrador")
-  print("2 - Usuario Doscente")
-  print("3 - Usuario Discente")
-  print("4 - Sair do sistema")
-  opc_geral = int(input("Indique a opção desejada: "))
+  menu_inicial()
+  opc_geral = validar_inputs('Indique a opção desejada: ', 1, 4)
+  clear() #Função para linpar o terminal
+
   match opc_geral:
     case 1:
       ficar_admin = True
       while(ficar_admin):
-        print("1 - Login")
-        print("2 - Voltar ao menu principal")
-        opc_admin = int(input("Indique a opção desejada: "))
+        menu_login()
+        opc_admin = validar_inputs('Indique a opção desejada: ', 1, 2)
+
         match opc_admin:
           case 1:
               ID = input("Insira seu ID: ")
               senha = input("insira sua senha: ")
               logado = sistema.log_admin(ID,senha)
+              clear() #Função para linpar o terminal
+
               if logado:
-                print("Você esta logado")
-                #adm = administador() #cria o objeto administrador
-                #adm.carregar_dados("administrador.txt") #carrega todos os dados do arquivo
+                adm = Administrador() #cria o objeto administrador
+                adm.carregar_dados() #carrega todos os dados do arquivo
                 func_admin = True
-                while(func_admin):
-                  print("1 - Adicionar Usuario")
-                  print("2 - Excluir usuario")
-                  print("3 - Adicionar Disciplina")
-                  print("4 - Excluir Disciplina")
-                  print("5 - Sair do sistema")
-                  func = int(input("Indique a opção desejada: "))
-                  if func == 1:
-                    print("1 - Aluno")
-                    print("2 - Professor")
-                    usu = int(input("Indique o tipo de usuario: "))
+                while func_admin:
+                  menu_admin()
+                  func = validar_inputs('Indique a opção desejada: ',1, 5)
+                  clear()
+
+                  # dicionar um novo usuario ao sitema
+                  if func == 1: 
+                    menu_escolher_usuarios()
+                    usu = validar_inputs('Indique o tipo de usuario: ', 1, 2)
+
+                    # adiciona um novo aluno ao sitema
                     if usu == 1:
-                      usuario = Aluno()
+                      aluno = Aluno()
+                      aluno.Set_ID(sistema.gerar_IDusuaio())
+                      aluno.Set_nome(input('Informe o nome do aluno que deseja cadastrar: '))
+                      aluno.Set_senha('123456') # cria uma senha inicial temporaria para o primeiro acesso do aluno
+                      clear()
 
-                    elif usu == 2:
-                      usuario = Professor()
-                    #else:
-                      #print("Opção indicada não existe...")
-                      #break
+                      print('O seguinte Aluno será cadastrado no sitema:')
+                      print('Matricula:'.ljust(10), 'nome:'.center(15), 'senha:'.rjust(10))
+                      matricula = aluno.get_ID()
+                      nome = aluno.get_nome()
+                      senha = aluno.get_senha()
+                      print(matricula.ljust(10), nome.center(15), senha.rjust(10))
 
-                    # Inicia os valores do objeto usuario pela primeira vez
+                      menu_confirma_cadastro()
+                      conf = validar_inputs('Indique a opção desejada: ', 1, 2)
+                      if conf == 1:
+                        aluno.salvar_dados()
+                        clear()
+                        print('Aluno cadastrado com sucesso!!!!')
+                      else:
+                        print('Cadastro de novo Aluno cancelado!!!')
 
-                    # Gera o ID do usuario
-                    ID = sistema.gerar_IDusuaio()
-                    usuario.Set_ID(ID)
-                    print(usuario.get_ID())
-                    # Adm digita o nome do usuario
-                    nome = input("Insira o nome do usuario: ")
-                    # adm digita a senha
-                    senha = input("Insira a senha do usuario: ")
-                    usuario.set_senha(senha)
+                    # adiciona um novo professor ao sistema
+                    else:
+                      professor = Professor()
+                      professor.Set_ID(sistema.gerar_IDusuaio())
+                      professor.Set_nome(input('Informe o nome do novo professor que deseja cadastrar: '))
+                      professor.Set_senha('123456') # cria uma senha inicial temporaria para o primeiro acesso do professor
+                      clear()
 
-                    #salva todas as informações no arquivo do usuario
-                    usuario.guardar_dados()
+                      print('O seguinte professor será cadastrado no sitema:')
+                      print('Matricula:'.ljust(10), 'nome:'.center(15), 'senha:'.rjust(10))
+                      matricula = professor.get_ID()
+                      nome = professor.get_nome()
+                      senha = professor.get_senha()
+                      print(matricula.ljust(10), nome.center(15), senha.rjust(10))
 
+                      menu_confirma_cadastro()
+                      conf = validar_inputs('Indique a opção desejada: ', 1, 2)
+                      if conf == 1:
+                        professor.salvar_dados()
+                        clear()
+                        print('Professor cadastrado com sucesso!!!!')
+                      else:
+                        print('Cadastro de novo professor cancelado!!!!')
+                      
                   #exclui usuarios
                   elif func == 2:
-                    #pega o ID do usuario que deseja excluir
-                    ID = input("Insira o ID do Usuario que deseja excluir: ")
-                    #exclui o arquivo
-                    adm.excluir_arquivo(ID)
+                    menu_escolher_usuarios()
+                    usu = validar_inputs('Indique o tipo de usuario: ', 1, 2)
 
-                  #cria disciplina
-                  elif func == 3:
+                    if usu == 1:
+                      matricula = input('Digite a matricula do aluno que deseja excluir do sistema: ')
+                      adm.Excluir_usuario(pathAlunos, matricula, 1)
+                    else:
+                      matricula = input('Digite a matricula do professor que deseja excluir do sistema: ')
+                      adm.Excluir_usuario(pathProfessores, matricula, 2)
 
-                    #cria o objeto disciplina
-                    disciplima = disciplina()
+                  elif func == 3: # Registra um disciplina no sistema
+                    cabecalho('Criar disciplina')
+                    nome = input('Digite o nome da disciplina que deseja criar: ')
+                    ID_diciplina = sistema.gerar_IDdisciplina()
+                    sistema.set_disciplinas(nome, ID_diciplina)
+                    clear()
 
-                    #gera o ID para a disciplina
-                    ID = oSistema.gerar_IDdisciplina()
-                    disciplina.set_ID(ID)
+                    print('A seguinte didciplina será cadastrado no sitema:')
+                    print('ID da disciplina:'.ljust(20), 'nome:'.center(30))
+                    nome = sistema.get_disciplina(ID_diciplina)
+                    print(ID_diciplina.ljust(20), nome.center(30))
 
-                    #pega o nome da disciplina
-                    nome = input("Insira o nome da disciplina: ")
-                    disciplina.set_nome(nome)
-
-                    #salva todas as infomações no arquivo da disciplina
-                    disciplina.guardar_dados()
+                    menu_confirma_cadastro()
+                    conf = validar_inputs('Indique a opção desejada: ', 1, 2)
+                    if conf == 1:
+                      sistema.gravarDisciplinas()
+                      clear()
+                      print('Disciplina cadastrada com sucesso!!!!')
+                    else:
+                      print('Cadastro de disciplina cancelado!!!')
 
                   #excluir disciplina
                   elif func == 4:
-                    # pega o ID da disciplina que deseja excluir
-                    ID = input("Insira o ID da disciplina que deseja excluir: ")
-                    # exclui o arquivo
-                    adm.excluir_arquivo(ID)
+                    cabecalho('Excluir Disciplina')
+                    ID_disciplina = input("Insira o ID da disciplina que deseja excluir: ")
+                    clear()
 
-                  #sair das finções administradoras
-                  elif func == 5:
-                    print("Função administrador encerrada!!")
+                    print('A disciplina a seguinte será excluida do sistema junto com todos os dados desta:')
+                    print('ID da disciplina:'.ljust(20), 'nome:'.center(30))
+                    nome = sistema.get_disciplina(ID_disciplina)
+                    print(ID_disciplina.ljust(20), nome.center(30))
 
-                    #encera o laço das funções
-                    func_admin = False
+                    menu_confirmar_ação()
+                    conf = validar_inputs('Indique a opção desejada: ', 1, 2)
+                    if conf == 1:
+                      adm.Excluir_disciplina(pathDisciplinas, ID_disciplina)
+                      clear()
+                      print('Disciplina excluida com sucesso!!!!')
+                    else:
+                      print('Ação cancelada!!')
 
-                  #indica que o administrador escolheu uma função inexistente
+                  #sair das funções administradoras
                   else:
-                    print("Opção indicada não existe...")
+                    func_admin = False
 
               #caso incorretas
               else:
@@ -115,12 +163,16 @@ while(ficar): #laço principal
 
           #encerrando o login do administradir e retornado ao menu princial
           case 2:
-            print("Encerrando a função administradora... Retornando ao menu inicial")
+            clear()
+            #print("Encerrando a função administradora... Retornando ao menu inicial")
             ficar_admin = False
-    #case 2:
-      #Doscente
-    #case 3:
-      #Discete
     case 2:
+      #Doscente
+      pass
+    case 3:
+      #Discete
+      pass
+    case 4:
         print("Finalizando o sistema... Obrigado!!")
+        sistema.gravarSistema()
         ficar = False
