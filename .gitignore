@@ -14,8 +14,7 @@ venv.bak/
 
 # files of data
 dados/
-dado/
-dados/alunos
-dados/disciplinas
-dados/professores
+dados/alunos/
+dados/disciplinas/
+dados/professores/
 
