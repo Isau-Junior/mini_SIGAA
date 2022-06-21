@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Environments
+# Ambientes
 .env
 .venv
 env/
@@ -12,7 +12,7 @@ ENV/
 env.bak/
 venv.bak/
 
-# files of data
+# nome das pastas
 dados/
 dados/alunos/
 dados/disciplinas/
